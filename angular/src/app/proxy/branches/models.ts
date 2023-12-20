@@ -8,8 +8,8 @@ export interface BranchCreateDto {
 }
 
 export interface BranchDto extends FullAuditedEntityDto<number> {
-  title: string;
-  mangerName: string;
+  title?: string;
+  mangerName?: string;
   startTime?: string;
   endTime?: string;
   concurrencyStamp?: string;
@@ -18,7 +18,12 @@ export interface BranchDto extends FullAuditedEntityDto<number> {
 export interface BranchExcelDownloadDto {
   downloadToken?: string;
   filterText?: string;
-  name?: string;
+  title?: string;
+  mangerName?: string;
+  startTimeMin?: string;
+  startTimeMax?: string;
+  endTimeMin?: string;
+  endTimeMax?: string;
 }
 
 export interface BranchUpdateDto {

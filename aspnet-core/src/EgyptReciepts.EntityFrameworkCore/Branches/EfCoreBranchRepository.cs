@@ -23,10 +23,10 @@ namespace EgyptReciepts.Branches
             string filterText = null,
             string title = null,
             string mangerName = null,
-            DateTime? startTimeMin = null,
-            DateTime? startTimeMax = null,
-            DateTime? endTimeMin = null,
-            DateTime? endTimeMax = null,
+            TimeSpan? startTimeMin = null,
+            TimeSpan? startTimeMax = null,
+            TimeSpan? endTimeMin = null,
+            TimeSpan? endTimeMax = null,
             string sorting = null,
             int maxResultCount = int.MaxValue,
             int skipCount = 0,
@@ -41,10 +41,10 @@ namespace EgyptReciepts.Branches
             string filterText = null,
             string title = null,
             string mangerName = null,
-            DateTime? startTimeMin = null,
-            DateTime? startTimeMax = null,
-            DateTime? endTimeMin = null,
-            DateTime? endTimeMax = null,
+            TimeSpan? startTimeMin = null,
+            TimeSpan? startTimeMax = null,
+            TimeSpan? endTimeMin = null,
+            TimeSpan? endTimeMax = null,
             CancellationToken cancellationToken = default)
         {
             var query = ApplyFilter((await GetDbSetAsync()), filterText, title, mangerName, startTimeMin, startTimeMax, endTimeMin, endTimeMax);
@@ -56,10 +56,10 @@ namespace EgyptReciepts.Branches
             string filterText,
             string title = null,
             string mangerName = null,
-            DateTime? startTimeMin = null,
-            DateTime? startTimeMax = null,
-            DateTime? endTimeMin = null,
-            DateTime? endTimeMax = null)
+            TimeSpan? startTimeMin = null,
+            TimeSpan? startTimeMax = null,
+            TimeSpan? endTimeMin = null,
+            TimeSpan? endTimeMax = null)
         {
             return query
                     .WhereIf(!string.IsNullOrWhiteSpace(filterText), e => e.Title.Contains(filterText) || e.MangerName.Contains(filterText))

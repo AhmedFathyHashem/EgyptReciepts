@@ -20,7 +20,7 @@ namespace EgyptReciepts.Branches
         }
 
         public async Task<Branch> CreateAsync(
-        string title, string mangerName, DateTime startTime, DateTime endTime)
+        string title, string mangerName, TimeSpan startTime, TimeSpan endTime)
         {
             Check.NotNullOrWhiteSpace(title, nameof(title));
             Check.Length(title, nameof(title), BranchConsts.TitleMaxLength);
@@ -39,7 +39,7 @@ namespace EgyptReciepts.Branches
 
         public async Task<Branch> UpdateAsync(
             int id,
-            string title, string mangerName, DateTime startTime, DateTime endTime, [CanBeNull] string concurrencyStamp = null
+            string title, string mangerName, TimeSpan startTime, TimeSpan endTime, [CanBeNull] string concurrencyStamp = null
         )
         {
             Check.NotNullOrWhiteSpace(title, nameof(title));

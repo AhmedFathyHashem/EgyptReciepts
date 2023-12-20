@@ -58,7 +58,7 @@ export class BranchService {
       method: 'GET',
       responseType: 'blob',
       url: '/api/app/branches/as-excel-file',
-      params: { downloadToken: input.downloadToken, filterText: input.filterText, name: input.name },
+      params: { downloadToken: input.downloadToken, filterText: input.filterText, title: input.title, mangerName: input.mangerName, startTimeMin: input.startTimeMin, startTimeMax: input.startTimeMax, endTimeMin: input.endTimeMin, endTimeMax: input.endTimeMax },
     },
     { apiName: this.apiName,...config });
   
