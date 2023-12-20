@@ -8,8 +8,8 @@ namespace EgyptReciepts.Branches
     {
         public string Title { get; set; }
         public string MangerName { get; set; }
-        public TimeSpan StartTime { get; set; }
-        public TimeSpan EndTime { get; set; }
+        public DateTime StartTime { get; set; }
+        public DateTime EndTime { get; set; }
 
         public string ConcurrencyStamp { get; set; }
     }

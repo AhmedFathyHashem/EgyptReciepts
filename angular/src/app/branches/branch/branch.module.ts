@@ -11,11 +11,13 @@ import { CommercialUiModule } from '@volo/abp.commercial.ng.ui';
 import { PageModule } from '@abp/ng.components/page';
 import { BranchComponent } from './components/branch.component';
 import { BranchRoutingModule } from './branch-routing.module';
+import { NgbTimepickerModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [BranchComponent],
   imports: [
     BranchRoutingModule,
+    NgbTimepickerModule,
     CoreModule,
     ThemeSharedModule,
     CommercialUiModule,

@@ -1,4 +1,4 @@
-import { ABP, downloadBlob, ListService, PagedResultDto, TrackByService } from '@abp/ng.core';
+import { ABP, downloadBlob, ListService, PagedResultDto, PermissionService, TrackByService } from '@abp/ng.core';
 import { Confirmation, ConfirmationService } from '@abp/ng.theme.shared';
 import { DateAdapter } from '@abp/ng.theme.shared/extensions';
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
@@ -32,15 +32,22 @@ export class BranchComponent implements OnInit {
 
   isExportToExcelBusy = false;
 
+  startTimeSpan: string;
+
+  endTimeSpan: string;
+
   selected?: BranchDto;
+
+  isPublic = false;
 
   constructor(
     public readonly list: ListService,
     public readonly track: TrackByService,
     public readonly service: BranchService,
     private confirmation: ConfirmationService,
-    private fb: FormBuilder
-  ) {}
+    private fb: FormBuilder,
+    private permissionService: PermissionService
+  ) { }
 
   ngOnInit() {
     const getData = (query: ABP.PageQueryParams) =>
@@ -48,8 +55,9 @@ export class BranchComponent implements OnInit {
         ...query,
         ...this.filters,
         filterText: query.filter,
+        maxResultCount:3
       });
-
+    this.isPublic = !this.permissionService.getGrantedPolicy('EgyptReciepts.Branches.Default');
     const setData = (list: PagedResultDto<BranchDto>) => (this.data = list);
 
     this.list.hookToQuery(getData).subscribe(setData);
@@ -65,8 +73,8 @@ export class BranchComponent implements OnInit {
     this.form = this.fb.group({
       title: [title ?? null, [Validators.required, Validators.maxLength(200)]],
       mangerName: [mangerName ?? null, [Validators.required, Validators.maxLength(250)]],
-      startTime: [startTime ? new Date(startTime) : null, []],
-      endTime: [endTime ? new Date(endTime) : null, []],
+      startTime: [startTime ?? null, [Validators.required]],
+      endTime: [endTime ?? null, [Validators.required]],
     });
   }
 
@@ -82,12 +90,26 @@ export class BranchComponent implements OnInit {
 
   submitForm() {
     if (this.form.invalid) return;
+    const selectedStartTime = this.form.value.startTime;
+    const selectedEndTime = this.form.value.endTime;
 
+    const startDate = new Date();    
+    startDate.setHours(selectedStartTime.hour);
+    startDate.setMinutes(selectedStartTime.minute);
+    startDate.toUTCString()
+
+    const endDate = new Date();        
+    endDate.setHours(selectedEndTime.hour);
+    endDate.setMinutes(selectedEndTime.minute);
+
+
+    this.form.value.startTime = startDate;
+    this.form.value.endTime = endDate;
     const request = this.selected
       ? this.service.update(this.selected.id, {
-          ...this.form.value,
-          concurrencyStamp: this.selected.concurrencyStamp,
-        })
+        ...this.form.value,
+        concurrencyStamp: this.selected.concurrencyStamp,
+      })
       : this.service.create(this.form.value);
 
     this.isModalBusy = true;
@@ -118,6 +140,18 @@ export class BranchComponent implements OnInit {
         switchMap(() => this.service.delete(record.id))
       )
       .subscribe(this.list.get);
+  }
+
+  Book(record: BranchDto) {
+    const options: Partial<Confirmation.Options> = {
+      hideCancelBtn: true,
+      hideYesBtn: true,
+      messageLocalizationParams: [record.title],
+      dismissible: true,
+    }
+    this.confirmation
+      .success('::BookingConfimationMessage', '::BookingSuccess', options)
+
   }
 
   exportToExcel() {

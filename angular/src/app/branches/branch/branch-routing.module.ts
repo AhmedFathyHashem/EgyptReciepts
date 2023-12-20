@@ -7,7 +7,7 @@ const routes: Routes = [
   {
     path: '',
     component: BranchComponent,
-    canActivate: [AuthGuard, PermissionGuard],
+    //canActivate: [AuthGuard, PermissionGuard],
   },
 ];
 

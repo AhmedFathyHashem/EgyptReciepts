@@ -5,13 +5,7 @@ import { RouterModule, Routes } from '@angular/router';
 const routes: Routes = [
   {
     path: '',
-    pathMatch: 'full',
-    loadChildren: () => import('./home/home.module').then(m => m.HomeModule),
-  },
-  {
-    path: 'dashboard',
-    loadChildren: () => import('./dashboard/dashboard.module').then(m => m.DashboardModule),
-    canActivate: [AuthGuard, PermissionGuard],
+    loadChildren: () => import('./branches/branch/branch.module').then(m => m.BranchModule),
   },
   {
     path: 'account',
@@ -64,10 +58,7 @@ const routes: Routes = [
         m => m.GdprCookieConsentModule
       ),
   },
-  {
-    path: 'branches',
-    loadChildren: () => import('./branches/branch/branch.module').then(m => m.BranchModule),
-  },
+  
 ];
 
 @NgModule({

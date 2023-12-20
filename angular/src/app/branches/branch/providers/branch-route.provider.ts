@@ -13,7 +13,7 @@ function configureRoutes(routes: RoutesService) {
         iconClass: 'fas fa-hotel',
         name: '::Menu:Branches',
         layout: eLayoutType.application,
-        requiredPolicy: 'EgyptReciepts.Branches',
+        //requiredPolicy: 'EgyptReciepts.Branches',
       },
     ]);
   };

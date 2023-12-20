@@ -54,6 +54,8 @@
     "MaxTitle": "Max Title",
     "MaxMangerName": "Max Manger Name",
     "MaxStartTime": "Max Start Time",
-    "MaxEndTime": "Max End Time"
+    "MaxEndTime": "Max End Time",
+    "BookingConfimationMessage": "booking restaurant {0}",
+    "BookingSuccess": "booking succeed"
   }
 }

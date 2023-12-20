@@ -19,16 +19,16 @@ namespace EgyptReciepts.Branches
         [NotNull]
         public virtual string MangerName { get; set; }
 
-        public virtual TimeSpan StartTime { get; set; }
+        public virtual DateTime StartTime { get; set; }
 
-        public virtual TimeSpan EndTime { get; set; }
+        public virtual DateTime EndTime { get; set; }
 
         public Branch()
         {
 
         }
 
-        public Branch(string title, string mangerName, TimeSpan startTime, TimeSpan endTime)
+        public Branch(string title, string mangerName, DateTime startTime, DateTime endTime)
         {
 
             Check.NotNull(title, nameof(title));

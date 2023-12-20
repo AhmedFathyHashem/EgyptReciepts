@@ -259,6 +259,14 @@
                 >
                   {{ 'AbpUi::Delete' | abpLocalization }}
                 </button>
+
+                <button
+                  ngbDropdownItem
+                  *ngIf="isPublic"
+                  (click)="Book(row)"
+                >
+                  {{ 'AbpUi::Book' | abpLocalization }}
+                </button>
               </div>
             </div>
           </ng-template>
@@ -275,15 +283,45 @@
         </ngx-datatable-column>
         <ngx-datatable-column name="{{ '::StartTime' | abpLocalization }}" prop="startTime">
           <ng-template let-row="row" ngx-datatable-cell-template>
-            {{ row.startTime | date }}
+            {{ row.startTime | shortTime }}
           </ng-template>
         </ngx-datatable-column>
         <ngx-datatable-column name="{{ '::EndTime' | abpLocalization }}" prop="endTime">
           <ng-template let-row="row" ngx-datatable-cell-template>
-            {{ row.endTime | date }}
+            {{ row.endTime | shortTime }}
           </ng-template>
         </ngx-datatable-column>
       </ngx-datatable>
+      <ngx-datatable-footer>
+        <ng-template
+          ngx-datatable-footer-template
+          let-rowCount="rowCount"
+          let-pageSize="pageSize"
+          let-selectedCount="selectedCount"
+          let-curPage="curPage"
+          let-offset="offset"
+          let-isVisible="isVisible"
+          ngx-datatable-footer-template
+        >
+          <app-nodata-or-loading
+            loaderImage="table.svg"
+            [isLoadingData]="service.isLoading"
+            [isDataNotEmpty]="service.data.items.length > 0"
+            [isDataFiltered]="service.isFiltering"
+            [isTableMode]="true" noResultIcons="tasks"
+          >
+          </app-nodata-or-loading>
+          <div class="w-100 footer">
+            <app-pager
+              [page]="curPage"
+              [size]="pageSize"
+              [count]="rowCount"
+              (pageNumberChanged)="onPageNumberChange($event)"
+              (pageSizeChanged)="onPageSizeChange($event , table)"
+            ></app-pager>
+          </div>
+        </ng-template>
+      </ngx-datatable-footer>
     </div>
   </div>
 </abp-page>
@@ -327,61 +365,24 @@
           </label>
 
           <div class="input-group" validationTarget>
-            <input
-              readonly
-              id="branch-start-time"
-              formControlName="startTime"
-              class="form-control"
-              ngbDatepicker
-              #startTimeInput
-              #startTimeDatepicker="ngbDatepicker"
-              (click)="startTimeDatepicker.open()"
-              (keyup.space)="startTimeDatepicker.open()"
+            <!-- Use NgbTimepicker directly without ngb-timepicker directive -->
+            <ngb-timepicker
+            formControlName="startTime"
+            [minuteStep]="30"
             />
-            <div *ngIf="startTimeInput.value" class="input-group-append">
-              <button
-                class="btn btn-link px-2"
-                type="button"
-                [title]="'AbpUi::Clear' | abpLocalization"
-                (click)="
-                  startTimeDatepicker.writeValue(null);
-                  startTimeDatepicker.manualDateChange(null, true)
-                "
-              >
-                <i class="fa fa-times" aria-hidden="true"></i>
-              </button>
-            </div>
           </div>
         </div>
         <div class="mb-3">
           <label class="form-label" for="branch-end-time">
             {{ '::EndTime' | abpLocalization }}
           </label>
-
+    
           <div class="input-group" validationTarget>
-            <input
-              readonly
-              id="branch-end-time"
-              formControlName="endTime"
-              class="form-control"
-              ngbDatepicker
-              #endTimeInput
-              #endTimeDatepicker="ngbDatepicker"
-              (click)="endTimeDatepicker.open()"
-              (keyup.space)="endTimeDatepicker.open()"
-            />
-            <div *ngIf="endTimeInput.value" class="input-group-append">
-              <button
-                class="btn btn-link px-2"
-                type="button"
-                [title]="'AbpUi::Clear' | abpLocalization"
-                (click)="
-                  endTimeDatepicker.writeValue(null); endTimeDatepicker.manualDateChange(null, true)
-                "
-              >
-                <i class="fa fa-times" aria-hidden="true"></i>
-              </button>
-            </div>
+            <!-- Use NgbTimepicker directly without ngb-timepicker directive -->
+            <ngb-timepicker
+            formControlName="endTime"
+            [minuteStep]="30"
+            ></ngb-timepicker>
           </div>
         </div>
       </div>
