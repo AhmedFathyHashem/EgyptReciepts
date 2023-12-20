@@ -1,0 +1,400 @@
+<abp-page [title]="'::Branches' | abpLocalization">
+  <abp-page-toolbar-container class="col">
+    <div class="text-lg-end pt-2">
+      <button
+        class="btn btn-primary btn-sm mx-2"
+        type="button"
+        [disabled]="isExportToExcelBusy"
+        (click)="exportToExcel()"
+      >
+        {{ '::ExportToExcel' | abpLocalization }}
+      </button>
+
+      <button
+        *abpPermission="'EgyptReciepts.Branches.Create'"
+        class="btn btn-primary btn-sm"
+        type="button"
+        (click)="create()"
+      >
+        <i class="fa fa-plus me-1" aria-hidden="true"></i>
+        {{ '::NewBranch' | abpLocalization }}
+      </button>
+    </div>
+  </abp-page-toolbar-container>
+
+  <abp-advanced-entity-filters localizationSourceName="" [list]="list">
+    <abp-advanced-entity-filters-form>
+      <form #filterForm (keyup.enter)="list.get()">
+        <div class="row">
+          <div class="col-12 col-sm-auto">
+            <div class="mb-3">
+              <label class="form-label" for="titleFilter">
+                {{ '::Title' | abpLocalization }}
+              </label>
+
+              <input
+                id="titleFilter"
+                class="form-control"
+                [(ngModel)]="filters.title"
+                [ngModelOptions]="{ standalone: true }"
+              />
+            </div>
+          </div>
+          <div class="col-12 col-sm-auto">
+            <div class="mb-3">
+              <label class="form-label" for="mangerNameFilter">
+                {{ '::MangerName' | abpLocalization }}
+              </label>
+
+              <input
+                id="mangerNameFilter"
+                class="form-control"
+                [(ngModel)]="filters.mangerName"
+                [ngModelOptions]="{ standalone: true }"
+              />
+            </div>
+          </div>
+          <div class="col-12 col-sm-auto">
+            <div class="mb-3">
+              <label class="form-label" for="minStartTime">
+                {{ '::MinStartTime' | abpLocalization }}
+              </label>
+
+              <div class="input-group" validationTarget>
+                <input
+                  id="minStartTime"
+                  class="form-control"
+                  #minStartTimeInput
+                  #minStartTimeDatepicker="ngbDatepicker"
+                  name="minStartTime"
+                  ngbDatepicker
+                  container="body"
+                  readonly
+                  (click)="minStartTimeDatepicker.toggle()"
+                  (keyup.space)="minStartTimeDatepicker.toggle()"
+                  [(ngModel)]="filters.startTimeMin"
+                  [ngModelOptions]="{ standalone: true }"
+                />
+                <div *ngIf="minStartTimeInput.value" class="input-group-append">
+                  <button
+                    class="btn btn-link px-2"
+                    type="button"
+                    [title]="'AbpUi::Clear' | abpLocalization"
+                    (click)="
+                      minStartTimeDatepicker.writeValue(null);
+                      minStartTimeDatepicker.manualDateChange(null, true)
+                    "
+                  >
+                    <i class="fa fa-times" aria-hidden="true"></i>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-12 col-sm-auto">
+            <div class="mb-3">
+              <label class="form-label" for="maxStartTime">
+                {{ '::MaxStartTime' | abpLocalization }}
+              </label>
+
+              <div class="input-group" validationTarget>
+                <input
+                  id="maxStartTime"
+                  class="form-control"
+                  #maxStartTimeInput
+                  #maxStartTimeDatepicker="ngbDatepicker"
+                  name="maxStartTime"
+                  ngbDatepicker
+                  readonly
+                  (click)="maxStartTimeDatepicker.toggle()"
+                  (keyup.space)="maxStartTimeDatepicker.toggle()"
+                  [(ngModel)]="filters.startTimeMax"
+                  [ngModelOptions]="{ standalone: true }"
+                />
+                <div *ngIf="maxStartTimeInput.value" class="input-group-append">
+                  <button
+                    class="btn btn-link px-2"
+                    type="button"
+                    [title]="'AbpUi::Clear' | abpLocalization"
+                    (click)="
+                      maxStartTimeDatepicker.writeValue(null);
+                      maxStartTimeDatepicker.manualDateChange(null, true)
+                    "
+                  >
+                    <i class="fa fa-times" aria-hidden="true"></i>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-12 col-sm-auto">
+            <div class="mb-3">
+              <label class="form-label" for="minEndTime">
+                {{ '::MinEndTime' | abpLocalization }}
+              </label>
+
+              <div class="input-group" validationTarget>
+                <input
+                  id="minEndTime"
+                  class="form-control"
+                  #minEndTimeInput
+                  #minEndTimeDatepicker="ngbDatepicker"
+                  name="minEndTime"
+                  ngbDatepicker
+                  container="body"
+                  readonly
+                  (click)="minEndTimeDatepicker.toggle()"
+                  (keyup.space)="minEndTimeDatepicker.toggle()"
+                  [(ngModel)]="filters.endTimeMin"
+                  [ngModelOptions]="{ standalone: true }"
+                />
+                <div *ngIf="minEndTimeInput.value" class="input-group-append">
+                  <button
+                    class="btn btn-link px-2"
+                    type="button"
+                    [title]="'AbpUi::Clear' | abpLocalization"
+                    (click)="
+                      minEndTimeDatepicker.writeValue(null);
+                      minEndTimeDatepicker.manualDateChange(null, true)
+                    "
+                  >
+                    <i class="fa fa-times" aria-hidden="true"></i>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-12 col-sm-auto">
+            <div class="mb-3">
+              <label class="form-label" for="maxEndTime">
+                {{ '::MaxEndTime' | abpLocalization }}
+              </label>
+
+              <div class="input-group" validationTarget>
+                <input
+                  id="maxEndTime"
+                  class="form-control"
+                  #maxEndTimeInput
+                  #maxEndTimeDatepicker="ngbDatepicker"
+                  name="maxEndTime"
+                  ngbDatepicker
+                  readonly
+                  (click)="maxEndTimeDatepicker.toggle()"
+                  (keyup.space)="maxEndTimeDatepicker.toggle()"
+                  [(ngModel)]="filters.endTimeMax"
+                  [ngModelOptions]="{ standalone: true }"
+                />
+                <div *ngIf="maxEndTimeInput.value" class="input-group-append">
+                  <button
+                    class="btn btn-link px-2"
+                    type="button"
+                    [title]="'AbpUi::Clear' | abpLocalization"
+                    (click)="
+                      maxEndTimeDatepicker.writeValue(null);
+                      maxEndTimeDatepicker.manualDateChange(null, true)
+                    "
+                  >
+                    <i class="fa fa-times" aria-hidden="true"></i>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-12 col-sm-auto align-self-end mb-3">
+            <div class="row">
+              <div class="col-6 col-sm-auto d-grid">
+                <button type="button" class="btn btn-outline-primary" (click)="clearFilters()">
+                  <span>{{ 'AbpUi::Clear' | abpLocalization }}</span>
+                </button>
+              </div>
+              <div class="col-6 col-sm-auto d-grid">
+                <button type="button" class="btn btn-primary" (click)="list.get()">
+                  <span>{{ 'AbpUi::Refresh' | abpLocalization }}</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+    </abp-advanced-entity-filters-form>
+  </abp-advanced-entity-filters>
+
+  <div class="card">
+    <div class="card-body">
+      <ngx-datatable [rows]="data.items" [count]="data.totalCount" [list]="list" default>
+        <ngx-datatable-column
+          [name]="'AbpUi::Actions' | abpLocalization"
+          [maxWidth]="150"
+          [width]="150"
+          [sortable]="false"
+        >
+          <ng-template let-row="row" let-i="rowIndex" ngx-datatable-cell-template>
+            <div ngbDropdown container="body" class="d-inline-block">
+              <button
+                class="btn btn-primary btn-sm dropdown-toggle"
+                data-toggle="dropdown"
+                aria-haspopup="true"
+                ngbDropdownToggle
+              >
+                <i class="fa fa-cog me-1" aria-hidden="true"></i>
+                {{ 'AbpUi::Actions' | abpLocalization }}
+              </button>
+
+              <div ngbDropdownMenu>
+                <button
+                  ngbDropdownItem
+                  *abpPermission="'EgyptReciepts.Branches.Edit'"
+                  (click)="update(row)"
+                >
+                  {{ 'AbpUi::Edit' | abpLocalization }}
+                </button>
+
+                <button
+                  ngbDropdownItem
+                  *abpPermission="'EgyptReciepts.Branches.Delete'"
+                  (click)="delete(row)"
+                >
+                  {{ 'AbpUi::Delete' | abpLocalization }}
+                </button>
+              </div>
+            </div>
+          </ng-template>
+        </ngx-datatable-column>
+        <ngx-datatable-column name="{{ '::Title' | abpLocalization }}" prop="title">
+          <ng-template let-row="row" ngx-datatable-cell-template>
+            {{ row.title }}
+          </ng-template>
+        </ngx-datatable-column>
+        <ngx-datatable-column name="{{ '::MangerName' | abpLocalization }}" prop="mangerName">
+          <ng-template let-row="row" ngx-datatable-cell-template>
+            {{ row.mangerName }}
+          </ng-template>
+        </ngx-datatable-column>
+        <ngx-datatable-column name="{{ '::StartTime' | abpLocalization }}" prop="startTime">
+          <ng-template let-row="row" ngx-datatable-cell-template>
+            {{ row.startTime | date }}
+          </ng-template>
+        </ngx-datatable-column>
+        <ngx-datatable-column name="{{ '::EndTime' | abpLocalization }}" prop="endTime">
+          <ng-template let-row="row" ngx-datatable-cell-template>
+            {{ row.endTime | date }}
+          </ng-template>
+        </ngx-datatable-column>
+      </ngx-datatable>
+    </div>
+  </div>
+</abp-page>
+
+<abp-modal [busy]="isModalBusy" [(visible)]="isModalOpen">
+  <ng-template #abpHeader>
+    <h3>
+      {{ (selected ? 'AbpUi::Edit' : '::NewBranch') | abpLocalization }}
+    </h3>
+  </ng-template>
+
+  <ng-template #abpBody>
+    <form [formGroup]="form" id="branch" (ngSubmit)="submitForm()" validateOnSubmit>
+      <div class="mt-2 fade-in-top">
+        <div class="mb-3">
+          <label class="form-label" for="branch-title"> {{ '::Title' | abpLocalization }} * </label>
+
+          <input
+            id="branch-title"
+            formControlName="title"
+            class="form-control"
+            maxlength="200"
+            autofocus
+          />
+        </div>
+        <div class="mb-3">
+          <label class="form-label" for="branch-manger-name">
+            {{ '::MangerName' | abpLocalization }} *
+          </label>
+
+          <input
+            id="branch-manger-name"
+            formControlName="mangerName"
+            class="form-control"
+            maxlength="250"
+          />
+        </div>
+        <div class="mb-3">
+          <label class="form-label" for="branch-start-time">
+            {{ '::StartTime' | abpLocalization }}
+          </label>
+
+          <div class="input-group" validationTarget>
+            <input
+              readonly
+              id="branch-start-time"
+              formControlName="startTime"
+              class="form-control"
+              ngbDatepicker
+              #startTimeInput
+              #startTimeDatepicker="ngbDatepicker"
+              (click)="startTimeDatepicker.open()"
+              (keyup.space)="startTimeDatepicker.open()"
+            />
+            <div *ngIf="startTimeInput.value" class="input-group-append">
+              <button
+                class="btn btn-link px-2"
+                type="button"
+                [title]="'AbpUi::Clear' | abpLocalization"
+                (click)="
+                  startTimeDatepicker.writeValue(null);
+                  startTimeDatepicker.manualDateChange(null, true)
+                "
+              >
+                <i class="fa fa-times" aria-hidden="true"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="mb-3">
+          <label class="form-label" for="branch-end-time">
+            {{ '::EndTime' | abpLocalization }}
+          </label>
+
+          <div class="input-group" validationTarget>
+            <input
+              readonly
+              id="branch-end-time"
+              formControlName="endTime"
+              class="form-control"
+              ngbDatepicker
+              #endTimeInput
+              #endTimeDatepicker="ngbDatepicker"
+              (click)="endTimeDatepicker.open()"
+              (keyup.space)="endTimeDatepicker.open()"
+            />
+            <div *ngIf="endTimeInput.value" class="input-group-append">
+              <button
+                class="btn btn-link px-2"
+                type="button"
+                [title]="'AbpUi::Clear' | abpLocalization"
+                (click)="
+                  endTimeDatepicker.writeValue(null); endTimeDatepicker.manualDateChange(null, true)
+                "
+              >
+                <i class="fa fa-times" aria-hidden="true"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </ng-template>
+
+  <ng-template #abpFooter>
+    <button type="button" class="btn btn-secondary" abpClose>
+      {{ 'AbpUi::Cancel' | abpLocalization }}
+    </button>
+
+    <abp-button iconClass="fa fa-check" buttonType="submit" formName="branch">
+      {{ 'AbpUi::Save' | abpLocalization }}
+    </abp-button>
+  </ng-template>
+</abp-modal>
