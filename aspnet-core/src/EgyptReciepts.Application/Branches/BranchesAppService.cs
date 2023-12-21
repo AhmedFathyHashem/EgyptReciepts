@@ -21,7 +21,7 @@ using EgyptReciepts.Shared;
 namespace EgyptReciepts.Branches
 {
     [RemoteService(IsEnabled = false)]
-    [Authorize]
+    
     public class BranchesAppService : ApplicationService, IBranchesAppService
     {
         private readonly IDistributedCache<BranchExcelDownloadTokenCacheItem, string> _excelDownloadTokenCache;
