@@ -55,7 +55,6 @@ export class BranchComponent implements OnInit {
         ...query,
         ...this.filters,
         filterText: query.filter,
-        maxResultCount:3
       });
     this.isPublic = !this.permissionService.getGrantedPolicy('EgyptReciepts.Branches.Default');
     const setData = (list: PagedResultDto<BranchDto>) => (this.data = list);

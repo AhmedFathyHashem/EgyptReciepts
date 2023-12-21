@@ -22,209 +22,17 @@
     </div>
   </abp-page-toolbar-container>
 
-  <abp-advanced-entity-filters localizationSourceName="" [list]="list">
-    <abp-advanced-entity-filters-form>
-      <form #filterForm (keyup.enter)="list.get()">
-        <div class="row">
-          <div class="col-12 col-sm-auto">
-            <div class="mb-3">
-              <label class="form-label" for="titleFilter">
-                {{ '::Title' | abpLocalization }}
-              </label>
-
-              <input
-                id="titleFilter"
-                class="form-control"
-                [(ngModel)]="filters.title"
-                [ngModelOptions]="{ standalone: true }"
-              />
-            </div>
-          </div>
-          <div class="col-12 col-sm-auto">
-            <div class="mb-3">
-              <label class="form-label" for="mangerNameFilter">
-                {{ '::MangerName' | abpLocalization }}
-              </label>
-
-              <input
-                id="mangerNameFilter"
-                class="form-control"
-                [(ngModel)]="filters.mangerName"
-                [ngModelOptions]="{ standalone: true }"
-              />
-            </div>
-          </div>
-          <div class="col-12 col-sm-auto">
-            <div class="mb-3">
-              <label class="form-label" for="minStartTime">
-                {{ '::MinStartTime' | abpLocalization }}
-              </label>
-
-              <div class="input-group" validationTarget>
-                <input
-                  id="minStartTime"
-                  class="form-control"
-                  #minStartTimeInput
-                  #minStartTimeDatepicker="ngbDatepicker"
-                  name="minStartTime"
-                  ngbDatepicker
-                  container="body"
-                  readonly
-                  (click)="minStartTimeDatepicker.toggle()"
-                  (keyup.space)="minStartTimeDatepicker.toggle()"
-                  [(ngModel)]="filters.startTimeMin"
-                  [ngModelOptions]="{ standalone: true }"
-                />
-                <div *ngIf="minStartTimeInput.value" class="input-group-append">
-                  <button
-                    class="btn btn-link px-2"
-                    type="button"
-                    [title]="'AbpUi::Clear' | abpLocalization"
-                    (click)="
-                      minStartTimeDatepicker.writeValue(null);
-                      minStartTimeDatepicker.manualDateChange(null, true)
-                    "
-                  >
-                    <i class="fa fa-times" aria-hidden="true"></i>
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="col-12 col-sm-auto">
-            <div class="mb-3">
-              <label class="form-label" for="maxStartTime">
-                {{ '::MaxStartTime' | abpLocalization }}
-              </label>
-
-              <div class="input-group" validationTarget>
-                <input
-                  id="maxStartTime"
-                  class="form-control"
-                  #maxStartTimeInput
-                  #maxStartTimeDatepicker="ngbDatepicker"
-                  name="maxStartTime"
-                  ngbDatepicker
-                  readonly
-                  (click)="maxStartTimeDatepicker.toggle()"
-                  (keyup.space)="maxStartTimeDatepicker.toggle()"
-                  [(ngModel)]="filters.startTimeMax"
-                  [ngModelOptions]="{ standalone: true }"
-                />
-                <div *ngIf="maxStartTimeInput.value" class="input-group-append">
-                  <button
-                    class="btn btn-link px-2"
-                    type="button"
-                    [title]="'AbpUi::Clear' | abpLocalization"
-                    (click)="
-                      maxStartTimeDatepicker.writeValue(null);
-                      maxStartTimeDatepicker.manualDateChange(null, true)
-                    "
-                  >
-                    <i class="fa fa-times" aria-hidden="true"></i>
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="col-12 col-sm-auto">
-            <div class="mb-3">
-              <label class="form-label" for="minEndTime">
-                {{ '::MinEndTime' | abpLocalization }}
-              </label>
-
-              <div class="input-group" validationTarget>
-                <input
-                  id="minEndTime"
-                  class="form-control"
-                  #minEndTimeInput
-                  #minEndTimeDatepicker="ngbDatepicker"
-                  name="minEndTime"
-                  ngbDatepicker
-                  container="body"
-                  readonly
-                  (click)="minEndTimeDatepicker.toggle()"
-                  (keyup.space)="minEndTimeDatepicker.toggle()"
-                  [(ngModel)]="filters.endTimeMin"
-                  [ngModelOptions]="{ standalone: true }"
-                />
-                <div *ngIf="minEndTimeInput.value" class="input-group-append">
-                  <button
-                    class="btn btn-link px-2"
-                    type="button"
-                    [title]="'AbpUi::Clear' | abpLocalization"
-                    (click)="
-                      minEndTimeDatepicker.writeValue(null);
-                      minEndTimeDatepicker.manualDateChange(null, true)
-                    "
-                  >
-                    <i class="fa fa-times" aria-hidden="true"></i>
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="col-12 col-sm-auto">
-            <div class="mb-3">
-              <label class="form-label" for="maxEndTime">
-                {{ '::MaxEndTime' | abpLocalization }}
-              </label>
-
-              <div class="input-group" validationTarget>
-                <input
-                  id="maxEndTime"
-                  class="form-control"
-                  #maxEndTimeInput
-                  #maxEndTimeDatepicker="ngbDatepicker"
-                  name="maxEndTime"
-                  ngbDatepicker
-                  readonly
-                  (click)="maxEndTimeDatepicker.toggle()"
-                  (keyup.space)="maxEndTimeDatepicker.toggle()"
-                  [(ngModel)]="filters.endTimeMax"
-                  [ngModelOptions]="{ standalone: true }"
-                />
-                <div *ngIf="maxEndTimeInput.value" class="input-group-append">
-                  <button
-                    class="btn btn-link px-2"
-                    type="button"
-                    [title]="'AbpUi::Clear' | abpLocalization"
-                    (click)="
-                      maxEndTimeDatepicker.writeValue(null);
-                      maxEndTimeDatepicker.manualDateChange(null, true)
-                    "
-                  >
-                    <i class="fa fa-times" aria-hidden="true"></i>
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="col-12 col-sm-auto align-self-end mb-3">
-            <div class="row">
-              <div class="col-6 col-sm-auto d-grid">
-                <button type="button" class="btn btn-outline-primary" (click)="clearFilters()">
-                  <span>{{ 'AbpUi::Clear' | abpLocalization }}</span>
-                </button>
-              </div>
-              <div class="col-6 col-sm-auto d-grid">
-                <button type="button" class="btn btn-primary" (click)="list.get()">
-                  <span>{{ 'AbpUi::Refresh' | abpLocalization }}</span>
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </form>
-    </abp-advanced-entity-filters-form>
-  </abp-advanced-entity-filters>
-
-  <div class="card">
-    <div class="card-body">
-      <ngx-datatable [rows]="data.items" [count]="data.totalCount" [list]="list" default>
+  <div class="col-lg-12">
+    <div class="card">
+      <div class="card-body">
+        <div class="ngx-datatable-container">
+      <ngx-datatable 
+      [rows]="data.items" 
+      columnMode="force"
+      [count]="data.totalCount" 
+      [list]="list" 
+      [class.is-empty]="data.items.length === 0"
+      default>
         <ngx-datatable-column
           [name]="'AbpUi::Actions' | abpLocalization"
           [maxWidth]="150"
@@ -232,43 +40,21 @@
           [sortable]="false"
         >
           <ng-template let-row="row" let-i="rowIndex" ngx-datatable-cell-template>
-            <div ngbDropdown container="body" class="d-inline-block">
-              <button
-                class="btn btn-primary btn-sm dropdown-toggle"
-                data-toggle="dropdown"
-                aria-haspopup="true"
-                ngbDropdownToggle
-              >
-                <i class="fa fa-cog me-1" aria-hidden="true"></i>
-                {{ 'AbpUi::Actions' | abpLocalization }}
-              </button>
-
-              <div ngbDropdownMenu>
-                <button
-                  ngbDropdownItem
-                  *abpPermission="'EgyptReciepts.Branches.Edit'"
-                  (click)="update(row)"
-                >
-                  {{ 'AbpUi::Edit' | abpLocalization }}
-                </button>
-
-                <button
-                  ngbDropdownItem
-                  *abpPermission="'EgyptReciepts.Branches.Delete'"
-                  (click)="delete(row)"
-                >
-                  {{ 'AbpUi::Delete' | abpLocalization }}
-                </button>
-
-                <button
-                  ngbDropdownItem
-                  *ngIf="isPublic"
-                  (click)="Book(row)"
-                >
-                  {{ 'AbpUi::Book' | abpLocalization }}
-                </button>
-              </div>
-            </div>
+             <div  container="body" class="d-inline-block row">
+              <i 
+              class="fas fa-edit col-4" 
+              *abpPermission="'EgyptReciepts.Branches.Edit'"
+              (click)="update(row)"></i>
+              <i 
+              class="fas fa-trash col-4" 
+              *abpPermission="'EgyptReciepts.Branches.Delete'"
+                  (click)="delete(row)"></i>
+              <i 
+              class="fas fa-book col-4" 
+              *ngIf="isPublic"
+                  (click)="Book(row)"></i>
+             </div>
+           
           </ng-template>
         </ngx-datatable-column>
         <ngx-datatable-column name="{{ '::Title' | abpLocalization }}" prop="title">
@@ -291,37 +77,29 @@
             {{ row.endTime | shortTime }}
           </ng-template>
         </ngx-datatable-column>
-      </ngx-datatable>
-      <ngx-datatable-footer>
-        <ng-template
-          ngx-datatable-footer-template
-          let-rowCount="rowCount"
-          let-pageSize="pageSize"
-          let-selectedCount="selectedCount"
-          let-curPage="curPage"
-          let-offset="offset"
-          let-isVisible="isVisible"
-          ngx-datatable-footer-template
-        >
-          <app-nodata-or-loading
-            loaderImage="table.svg"
-            [isLoadingData]="service.isLoading"
-            [isDataNotEmpty]="service.data.items.length > 0"
-            [isDataFiltered]="service.isFiltering"
-            [isTableMode]="true" noResultIcons="tasks"
+        <ngx-datatable-footer>
+          <ng-template
+            ngx-datatable-footer-template
+            let-rowCount="rowCount"
+            let-pageSize="pageSize"
+            let-selectedCount="selectedCount"
+            let-curPage="curPage"
+            let-offset="offset"
+            let-isVisible="isVisible"
+            ngx-datatable-footer-template
           >
-          </app-nodata-or-loading>
-          <div class="w-100 footer">
-            <app-pager
-              [page]="curPage"
-              [size]="pageSize"
-              [count]="rowCount"
-              (pageNumberChanged)="onPageNumberChange($event)"
-              (pageSizeChanged)="onPageSizeChange($event , table)"
-            ></app-pager>
-          </div>
-        </ng-template>
-      </ngx-datatable-footer>
+            <app-nodata-or-loading
+              loaderImage="table.svg"
+              [isLoadingData]="data.items.length > 0"
+              [isDataNotEmpty]="data.items.length > 0"
+              [isTableMode]="false"
+            >
+            </app-nodata-or-loading>
+          </ng-template>
+        </ngx-datatable-footer>
+      </ngx-datatable>
+    </div>
+  </div>
     </div>
   </div>
 </abp-page>
